@@ -35,6 +35,7 @@ int main() {
     printf("[Klient] Podaj wiadomość (Ctrl+D aby zakończyć):\n");
 
     while (fgets(buffer, BUF_SIZE, stdin)) {
+        buffer[strlen(buffer)-1] = '\0';
         if (write(sock, buffer, strlen(buffer)) < 0) {
             perror("write");
             break;
