@@ -113,8 +113,9 @@ ssize_t bulk_write(int fd, char *buf, size_t count) {
 void run_server() {
     int server_fd = bind_tcp_socket(PORT, SOMAXCONN); // gniazdo
     int epoll_fd = epoll_create1(0); // mechanizm monitorowaniu wielu fd
-    if (epoll_fd == -1) ERR("epoll_create1");
+    if (epoll_fd == -1) ERR("epoll_create1"); 
 
+    // rejestrujemy gniazdo serwera w epollu
     struct epoll_event ev, events[MAX_EVENTS];
     ev.events = EPOLLIN;
     ev.data.fd = server_fd;
