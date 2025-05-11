@@ -17,6 +17,8 @@
 int clients[MAX_CLIENTS];
 int client_count = 0;
 
+
+
 void broadcast(int sender_fd, char *msg, size_t len) {
     for (int i = 0; i < client_count; i++) {
         int fd = clients[i];
@@ -76,7 +78,9 @@ int main() {
                 int client_fd = accept(server_fd, NULL, NULL);
                 if (client_fd < 0) perror("accept");
                 else {
-                    ev.events = EPOLLIN;
+                    //set_nonblocking(client_fd); // nowy kodzik
+
+                    ev.events = EPOLLIN; // dodajemy EPOLLET
                     ev.data.fd = client_fd;
                     epoll_ctl(epoll_fd, EPOLL_CTL_ADD, client_fd, &ev);
                     clients[client_count++] = client_fd;
